@@ -1,0 +1,75 @@
+
+// ===========================================================================================
+//    Automatically use healing potions :
+//      - Potions of Healing are used when below 75% max HP.
+//      - Elixir of Health or Antidote when poisoned.
+//
+// ===========================================================================================
+
+IF
+  ActionListEmpty()
+  HasItem("POTN55",Myself) // Potion of Superior Healing
+  HPPercentLT(Myself,75)
+THEN
+  RESPONSE #100
+    SetInterrupt(FALSE)
+    SetGlobalTimer("AI_SpellCastThisRound","LOCALS",6)
+    UseItem("POTN55",Myself) // Potion of Superior Healing
+    DisplayStringHead(Myself,9020001) // "*gloup*"
+    SetInterrupt(TRUE)
+END
+
+IF
+  ActionListEmpty()
+  HasItem("POTN52",Myself) // Potion of Extra Healing
+  HPPercentLT(Myself,75)
+THEN
+  RESPONSE #100
+    SetInterrupt(FALSE)
+    SetGlobalTimer("AI_SpellCastThisRound","LOCALS",6)
+    UseItem("POTN52",Myself) // Potion of Extra Healing
+    DisplayStringHead(Myself,9020001) // "*gloup*"
+    SetInterrupt(TRUE)
+END
+
+IF
+  ActionListEmpty()
+  HasItem("POTN08",Myself) // Potion of Healing
+  HPPercentLT(Myself,75)
+THEN
+  RESPONSE #100
+    SetInterrupt(FALSE)
+    SetGlobalTimer("AI_SpellCastThisRound","LOCALS",6)
+    UseItem("POTN08",Myself) // Potion of Healing
+    DisplayStringHead(Myself,9020001) // "*gloup*"
+    SetInterrupt(TRUE)
+END
+
+IF
+  ActionListEmpty()
+  StateCheck(Myself,STATE_POISONED)
+  HPPercentLT(Myself,75)
+  HasItem("POTN17",Myself) // Elixir of Health
+  !GlobalTimerNotExpired("AI_SpellCastThisRound","LOCALS")
+THEN
+  RESPONSE #100
+    SetInterrupt(FALSE)
+    SetGlobalTimer("AI_SpellCastThisRound","LOCALS",6)
+    UseItem("POTN17",Myself) // Elixir of Health
+    DisplayStringHead(Myself,9020001) // "*gloup*"
+    SetInterrupt(TRUE)
+END
+
+IF
+  ActionListEmpty()
+  StateCheck(Myself,STATE_POISONED)
+  HasItem("POTN20",Myself) // Antidote
+  !GlobalTimerNotExpired("AI_SpellCastThisRound","LOCALS")
+THEN
+  RESPONSE #100
+    SetInterrupt(FALSE)
+    SetGlobalTimer("AI_SpellCastThisRound","LOCALS",6)
+    UseItem("POTN20",Myself) // Antidote
+    DisplayStringHead(Myself,9020001) // "*gloup*"
+    SetInterrupt(TRUE)
+END

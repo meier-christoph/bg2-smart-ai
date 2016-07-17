@@ -1,0 +1,469 @@
+
+// ===========================================================================================
+//    Automatically use healing spells :
+//      - Neutralize and Slow Poison (both cleric and innate).
+//      - Cleric Mass Cure when all party member are below 80% max HP.
+//      - Cleric healing spells (strongest first).
+//      - Paladin Lay On Hands (including Mazzy's special skill).
+//
+// ===========================================================================================
+
+IF
+  StateCheck(Myself,STATE_POISONED)
+  HaveSpell(CLERIC_NEUTRALIZE_POISON) // Neutralize Poison
+  CheckStatLT(Myself,25,SPELLFAILUREPRIEST)
+  !GlobalTimerNotExpired("AI_SpellCastThisRound","LOCALS")
+  !GlobalTimerNotExpired("AI_CuringPoison","GLOBAL")
+THEN
+  RESPONSE #100
+    SetInterrupt(FALSE)
+    SetGlobalTimer("AI_CuringPoison","GLOBAL",6)
+    SetGlobalTimer("AI_SpellCastThisRound","LOCALS",6)
+    DisplayStringHead(Myself,9050001) // "*curing*"
+    Spell(Myself,CLERIC_NEUTRALIZE_POISON) // Neutralize Poison
+    SetInterrupt(TRUE)
+END
+
+IF
+  StateCheck(Myself,STATE_POISONED)
+  HaveSpell(CLERIC_SLOW_POISON) // Slow Poison
+  CheckStatLT(Myself,25,SPELLFAILUREPRIEST)
+  !GlobalTimerNotExpired("AI_SpellCastThisRound","LOCALS")
+  !GlobalTimerNotExpired("AI_CuringPoison","GLOBAL")
+THEN
+  RESPONSE #100
+    SetInterrupt(FALSE)
+    SetGlobalTimer("AI_CuringPoison","GLOBAL",6)
+    SetGlobalTimer("AI_SpellCastThisRound","LOCALS",6)
+    DisplayStringHead(Myself,9050001) // "*curing*"
+    Spell(Myself,CLERIC_SLOW_POISON) // Slow Poison
+    SetInterrupt(TRUE)
+END
+
+IF
+  StateCheck(Myself,STATE_POISONED)
+  HaveSpell(INNATE_SLOW_POISON) // Slow Poison
+  CheckStatLT(Myself,25,SPELLFAILUREMAGE)
+  !GlobalTimerNotExpired("AI_SpellCastThisRound","LOCALS")
+  !GlobalTimerNotExpired("AI_CuringPoison","GLOBAL")
+THEN
+  RESPONSE #100
+    SetInterrupt(FALSE)
+    SetGlobalTimer("AI_CuringPoison","GLOBAL",6)
+    SetGlobalTimer("AI_SpellCastThisRound","LOCALS",6)
+    DisplayStringHead(Myself,9050001) // "*curing*"
+    Spell(Myself,INNATE_SLOW_POISON) // Slow Poison
+    SetInterrupt(TRUE)
+END
+
+// ===========================================================================================
+
+IF
+  See(MostDamagedOf([PC]))
+  StateCheck(LastSeenBy(Myself),STATE_POISONED)
+  HaveSpell(CLERIC_NEUTRALIZE_POISON) // Neutralize Poison
+  CheckStatLT(Myself,25,SPELLFAILUREPRIEST)
+  !GlobalTimerNotExpired("AI_SpellCastThisRound","LOCALS")
+  !GlobalTimerNotExpired("AI_CuringPoison","GLOBAL")
+THEN
+  RESPONSE #100
+    SetInterrupt(FALSE)
+    SetGlobalTimer("AI_CuringPoison","GLOBAL",6)
+    SetGlobalTimer("AI_SpellCastThisRound","LOCALS",6)
+    DisplayStringHead(Myself,9050001) // "*curing*"
+    Spell(LastSeenBy(Myself),CLERIC_NEUTRALIZE_POISON) // Neutralize Poison
+    SetInterrupt(TRUE)
+END
+
+IF
+  See(MostDamagedOf([PC]))
+  StateCheck(LastSeenBy(Myself),STATE_POISONED)
+  HaveSpell(CLERIC_SLOW_POISON) // Slow Poison
+  CheckStatLT(Myself,25,SPELLFAILUREPRIEST)
+  !GlobalTimerNotExpired("AI_SpellCastThisRound","LOCALS")
+  !GlobalTimerNotExpired("AI_CuringPoison","GLOBAL")
+THEN
+  RESPONSE #100
+    SetInterrupt(FALSE)
+    SetGlobalTimer("AI_CuringPoison","GLOBAL",6)
+    SetGlobalTimer("AI_SpellCastThisRound","LOCALS",6)
+    DisplayStringHead(Myself,9050001) // "*curing*"
+    Spell(LastSeenBy(Myself),CLERIC_SLOW_POISON) // Slow Poison
+    SetInterrupt(TRUE)
+END
+
+IF
+  See(MostDamagedOf([PC]))
+  StateCheck(LastSeenBy(Myself),STATE_POISONED)
+  HaveSpell(INNATE_SLOW_POISON) // Slow Poison
+  CheckStatLT(Myself,25,SPELLFAILUREMAGE)
+  !GlobalTimerNotExpired("AI_SpellCastThisRound","LOCALS")
+  !GlobalTimerNotExpired("AI_CuringPoison","GLOBAL")
+THEN
+  RESPONSE #100
+    SetInterrupt(FALSE)
+    SetGlobalTimer("AI_CuringPoison","GLOBAL",6)
+    SetGlobalTimer("AI_SpellCastThisRound","LOCALS",6)
+    DisplayStringHead(Myself,9050001) // "*curing*"
+    Spell(LastSeenBy(Myself),INNATE_SLOW_POISON) // Slow Poison
+    SetInterrupt(TRUE)
+END
+
+// ===========================================================================================
+
+IF
+  OR(5)
+    HPPercentLT(Player1,80)
+    HPPercentLT(Player2,80)
+    HPPercentLT(Player3,80)
+    HPPercentLT(Player4,80)
+    HPPercentLT(Player5,80)
+  OR(5)
+    HPPercentLT(Player2,80)
+    HPPercentLT(Player3,80)
+    HPPercentLT(Player4,80)
+    HPPercentLT(Player5,80)
+    HPPercentLT(Player6,80)
+  OR(5)
+    HPPercentLT(Player1,80)
+    HPPercentLT(Player3,80)
+    HPPercentLT(Player4,80)
+    HPPercentLT(Player5,80)
+    HPPercentLT(Player6,80)
+  OR(5)
+    HPPercentLT(Player1,80)
+    HPPercentLT(Player2,80)
+    HPPercentLT(Player4,80)
+    HPPercentLT(Player5,80)
+    HPPercentLT(Player6,80)
+  OR(5)
+    HPPercentLT(Player1,80)
+    HPPercentLT(Player2,80)
+    HPPercentLT(Player3,80)
+    HPPercentLT(Player5,80)
+    HPPercentLT(Player6,80)
+  OR(5)
+    HPPercentLT(Player1,80)
+    HPPercentLT(Player2,80)
+    HPPercentLT(Player3,80)
+    HPPercentLT(Player4,80)
+    HPPercentLT(Player6,80)
+  HaveSpell(CLERIC_MASS_CURE) // Mass Cure
+  CheckStatLT(Myself,25,SPELLFAILUREPRIEST)
+  !GlobalTimerNotExpired("AI_SpellCastThisRound","LOCALS")
+THEN
+  RESPONSE #100
+    SetInterrupt(FALSE)
+    SetGlobalTimer("AI_Healing","GLOBAL",6)
+    SetGlobalTimer("AI_SpellCastThisRound","LOCALS",6)
+    DisplayStringHead(Myself,9050002) // "*healing*"
+    Spell(Myself,CLERIC_MASS_CURE) // Mass Cure
+    SetInterrupt(TRUE)
+END
+
+// ===========================================================================================
+
+IF
+  HPPercentLT(Myself,40)
+  HaveSpell(CLERIC_HEAL) // Heal
+  CheckStatLT(Myself,25,SPELLFAILUREPRIEST)
+  !GlobalTimerNotExpired("AI_SpellCastThisRound","LOCALS")
+THEN
+  RESPONSE #100
+    SetInterrupt(FALSE)
+    SetGlobalTimer("AI_SpellCastThisRound","LOCALS",6)
+    DisplayStringHead(Myself,9050002) // "*healing*"
+    Spell(Myself,CLERIC_HEAL) // Heal
+    SetInterrupt(TRUE)
+END
+
+IF
+  HPPercentLT(Myself,50)
+  HaveSpell(PALADIN_LAY_ON_HANDS) // Lay On Hands
+THEN
+  RESPONSE #100
+    SetInterrupt(FALSE)
+    DisplayStringHead(Myself,9050002) // "*healing*"
+    Spell(Myself,PALADIN_LAY_ON_HANDS) // Lay On Hands
+    SetInterrupt(TRUE)
+END
+
+IF
+  HPPercentLT(Myself,50)
+  HaveSpell(MAZZY_LAY) // Lay On Hands (Mazzy)
+THEN
+  RESPONSE #100
+    SetInterrupt(FALSE)
+    DisplayStringHead(Myself,9050002) // "*healing*"
+    Spell(Myself,MAZZY_LAY) // Lay On Hands (Mazzy)
+    SetInterrupt(TRUE)
+END
+
+IF
+  HPPercentLT(Myself,70)
+  HaveSpell(CLERIC_CURE_CRITICAL_WOUNDS) // Cure Critical Wounds
+  CheckStatLT(Myself,25,SPELLFAILUREPRIEST)
+  OR(2)
+    ActionListEmpty()
+    CheckStatLT(LastSeenBy(Myself),150,MAXHITPOINTS)
+  !GlobalTimerNotExpired("AI_SpellCastThisRound","LOCALS")
+THEN
+  RESPONSE #100
+    SetInterrupt(FALSE)
+    SetGlobalTimer("AI_SpellCastThisRound","LOCALS",6)
+    DisplayStringHead(Myself,9050002) // "*healing*"
+    Spell(Myself,CLERIC_CURE_CRITICAL_WOUNDS) // Cure Critical Wounds
+    SetInterrupt(TRUE)
+END
+
+IF
+  HPPercentLT(Myself,70)
+  HaveSpell(CLERIC_CURE_SERIOUS_WOUNDS) // Cure Serious Wounds
+  CheckStatLT(Myself,25,SPELLFAILUREPRIEST)
+  OR(2)
+    ActionListEmpty()
+    CheckStatLT(LastSeenBy(Myself),150,MAXHITPOINTS)
+  !GlobalTimerNotExpired("AI_SpellCastThisRound","LOCALS")
+THEN
+  RESPONSE #100
+    SetInterrupt(FALSE)
+    SetGlobalTimer("AI_SpellCastThisRound","LOCALS",6)
+    DisplayStringHead(Myself,9050002) // "*healing*"
+    Spell(Myself,CLERIC_CURE_SERIOUS_WOUNDS) // Cure Serious Wounds
+    SetInterrupt(TRUE)
+END
+
+IF
+  HPPercentLT(Myself,70)
+  HaveSpell(CLERIC_CURE_MEDIUM_WOUNDS) // Cure Medium Wounds
+  CheckStatLT(Myself,25,SPELLFAILUREPRIEST)
+  OR(2)
+    ActionListEmpty()
+    CheckStatLT(LastSeenBy(Myself),100,MAXHITPOINTS)
+  !GlobalTimerNotExpired("AI_SpellCastThisRound","LOCALS")
+THEN
+  RESPONSE #100
+    SetInterrupt(FALSE)
+    SetGlobalTimer("AI_SpellCastThisRound","LOCALS",6)
+    DisplayStringHead(Myself,9050002) // "*healing*"
+    Spell(Myself,CLERIC_CURE_MEDIUM_WOUNDS) // Cure Medium Wounds
+    SetInterrupt(TRUE)
+END
+
+IF
+  HPPercentLT(Myself,70)
+  HaveSpell(CLERIC_CURE_LIGHT_WOUNDS) // Cure Light Wounds
+  CheckStatLT(Myself,25,SPELLFAILUREPRIEST)
+  OR(2)
+    ActionListEmpty()
+    CheckStatLT(LastSeenBy(Myself),70,MAXHITPOINTS)
+  !GlobalTimerNotExpired("AI_SpellCastThisRound","LOCALS")
+THEN
+  RESPONSE #100
+    SetInterrupt(FALSE)
+    SetGlobalTimer("AI_SpellCastThisRound","LOCALS",6)
+    DisplayStringHead(Myself,9050002) // "*healing*"
+    Spell(Myself,CLERIC_CURE_LIGHT_WOUNDS) // Cure Light Wounds
+    SetInterrupt(TRUE)
+END
+
+IF
+  HPPercentLT(Myself,70)
+  HaveSpell(INNATE_CURE_LIGHT_WOUNDS) // Cure Light Wounds
+  CheckStatLT(Myself,25,SPELLFAILUREMAGE)
+  OR(2)
+    ActionListEmpty()
+    CheckStatLT(LastSeenBy(Myself),70,MAXHITPOINTS)
+  !GlobalTimerNotExpired("AI_SpellCastThisRound","LOCALS")
+THEN
+  RESPONSE #100
+    SetInterrupt(FALSE)
+    SetGlobalTimer("AI_SpellCastThisRound","LOCALS",6)
+    DisplayStringHead(Myself,9050002) // "*healing*"
+    Spell(Myself,INNATE_CURE_LIGHT_WOUNDS) // Cure Light Wounds
+    SetInterrupt(TRUE)
+END
+
+// ===========================================================================================
+
+IF
+  See(MostDamagedOf([PC]))
+  HPPercentLT(LastSeenBy(Myself),40)
+  HaveSpell(CLERIC_HEAL) // Heal
+  CheckStatLT(Myself,25,SPELLFAILUREPRIEST)
+  !StateCheck(LastSeenBy(Myself),STATE_INVISIBLE)
+  !StateCheck(LastSeenBy(Myself),STATE_IMPROVEDINVISIBILITY)
+  !GlobalTimerNotExpired("AI_SpellCastThisRound","LOCALS")
+  OR(2)
+    !GlobalTimerNotExpired("AI_Healing","GLOBAL")
+    HPPercentLT(LastSeenBy(Myself),20)
+THEN
+  RESPONSE #100
+    SetInterrupt(FALSE)
+    SetGlobalTimer("AI_Healing","GLOBAL",6)
+    SetGlobalTimer("AI_SpellCastThisRound","LOCALS",6)
+    DisplayStringHead(Myself,9050002) // "*healing*"
+    Spell(LastSeenBy(Myself),CLERIC_HEAL) // Heal
+    SetInterrupt(TRUE)
+END
+
+IF
+  See(MostDamagedOf([PC]))
+  HPPercentLT(LastSeenBy(Myself),50)
+  HaveSpell(PALADIN_LAY_ON_HANDS) // Lay On Hands
+  !StateCheck(LastSeenBy(Myself),STATE_INVISIBLE)
+  !StateCheck(LastSeenBy(Myself),STATE_IMPROVEDINVISIBILITY)
+  OR(2)
+    !GlobalTimerNotExpired("AI_Healing","GLOBAL")
+    HPPercentLT(LastSeenBy(Myself),40)
+THEN
+  RESPONSE #100
+    SetInterrupt(FALSE)
+    SetGlobalTimer("AI_Healing","GLOBAL",6)
+    DisplayStringHead(Myself,9050002) // "*healing*"
+    Spell(LastSeenBy(Myself),PALADIN_LAY_ON_HANDS) // Lay On Hands
+    SetInterrupt(TRUE)
+END
+
+IF
+  See(MostDamagedOf([PC]))
+  HPPercentLT(LastSeenBy(Myself),50)
+  HaveSpell(MAZZY_LAY) // Lay On Hands (Mazzy)
+  !StateCheck(LastSeenBy(Myself),STATE_INVISIBLE)
+  !StateCheck(LastSeenBy(Myself),STATE_IMPROVEDINVISIBILITY)
+  OR(2)
+    !GlobalTimerNotExpired("AI_Healing","GLOBAL")
+    HPPercentLT(LastSeenBy(Myself),40)
+THEN
+  RESPONSE #100
+    SetInterrupt(FALSE)
+    SetGlobalTimer("AI_Healing","GLOBAL",6)
+    DisplayStringHead(Myself,9050002) // "*healing*"
+    Spell(LastSeenBy(Myself),MAZZY_LAY) // Lay On Hands (Mazzy)
+    SetInterrupt(TRUE)
+END
+
+IF
+  See(MostDamagedOf([PC]))
+  HPPercentLT(LastSeenBy(Myself),70)
+  HaveSpell(CLERIC_CURE_CRITICAL_WOUNDS) // Cure Critical Wounds
+  CheckStatLT(Myself,25,SPELLFAILUREPRIEST)
+  OR(3)
+    ActionListEmpty()
+    HPPercentLT(LastSeenBy(Myself),40)
+    CheckStatLT(LastSeenBy(Myself),150,MAXHITPOINTS)
+  !StateCheck(LastSeenBy(Myself),STATE_INVISIBLE)
+  !StateCheck(LastSeenBy(Myself),STATE_IMPROVEDINVISIBILITY)
+  !GlobalTimerNotExpired("AI_SpellCastThisRound","LOCALS")
+  OR(2)
+    !GlobalTimerNotExpired("AI_Healing","GLOBAL")
+    HPPercentLT(LastSeenBy(Myself),40)
+THEN
+  RESPONSE #100
+    SetInterrupt(FALSE)
+    SetGlobalTimer("AI_Healing","GLOBAL",6)
+    SetGlobalTimer("AI_SpellCastThisRound","LOCALS",6)
+    DisplayStringHead(Myself,9050002) // "*healing*"
+    Spell(LastSeenBy(Myself),CLERIC_CURE_CRITICAL_WOUNDS) // Cure Critical Wounds
+    SetInterrupt(TRUE)
+END
+
+IF
+  See(MostDamagedOf([PC]))
+  HPPercentLT(LastSeenBy(Myself),70)
+  HaveSpell(CLERIC_CURE_SERIOUS_WOUNDS) // Cure Serious Wounds
+  CheckStatLT(Myself,25,SPELLFAILUREPRIEST)
+  OR(3)
+    ActionListEmpty()
+    HPPercentLT(LastSeenBy(Myself),40)
+    CheckStatLT(LastSeenBy(Myself),150,MAXHITPOINTS)
+  !StateCheck(LastSeenBy(Myself),STATE_INVISIBLE)
+  !StateCheck(LastSeenBy(Myself),STATE_IMPROVEDINVISIBILITY)
+  !GlobalTimerNotExpired("AI_SpellCastThisRound","LOCALS")
+  OR(2)
+    !GlobalTimerNotExpired("AI_Healing","GLOBAL")
+    HPPercentLT(LastSeenBy(Myself),40)
+THEN
+  RESPONSE #100
+    SetInterrupt(FALSE)
+    SetGlobalTimer("AI_Healing","GLOBAL",6)
+    SetGlobalTimer("AI_SpellCastThisRound","LOCALS",6)
+    DisplayStringHead(Myself,9050002) // "*healing*"
+    Spell(LastSeenBy(Myself),CLERIC_CURE_SERIOUS_WOUNDS) // Cure Serious Wounds
+    SetInterrupt(TRUE)
+END
+
+IF
+  See(MostDamagedOf([PC]))
+  HPPercentLT(LastSeenBy(Myself),70)
+  HaveSpell(CLERIC_CURE_MEDIUM_WOUNDS) // Cure Medium Wounds
+  CheckStatLT(Myself,25,SPELLFAILUREPRIEST)
+  OR(3)
+    ActionListEmpty()
+    HPPercentLT(LastSeenBy(Myself),40)
+    CheckStatLT(LastSeenBy(Myself),100,MAXHITPOINTS)
+  !StateCheck(LastSeenBy(Myself),STATE_INVISIBLE)
+  !StateCheck(LastSeenBy(Myself),STATE_IMPROVEDINVISIBILITY)
+  !GlobalTimerNotExpired("AI_SpellCastThisRound","LOCALS")
+  OR(2)
+    !GlobalTimerNotExpired("AI_Healing","GLOBAL")
+    HPPercentLT(LastSeenBy(Myself),40)
+THEN
+  RESPONSE #100
+    SetInterrupt(FALSE)
+    SetGlobalTimer("AI_Healing","GLOBAL",6)
+    SetGlobalTimer("AI_SpellCastThisRound","LOCALS",6)
+    DisplayStringHead(Myself,9050002) // "*healing*"
+    Spell(LastSeenBy(Myself),CLERIC_CURE_MEDIUM_WOUNDS) // Cure Medium Wounds
+    SetInterrupt(TRUE)
+END
+
+IF
+  See(MostDamagedOf([PC]))
+  HPPercentLT(LastSeenBy(Myself),70)
+  HaveSpell(CLERIC_CURE_LIGHT_WOUNDS) // Cure Light Wounds
+  CheckStatLT(Myself,25,SPELLFAILUREPRIEST)
+  OR(3)
+    ActionListEmpty()
+    HPPercentLT(LastSeenBy(Myself),40)
+    CheckStatLT(LastSeenBy(Myself),70,MAXHITPOINTS)
+  !StateCheck(LastSeenBy(Myself),STATE_INVISIBLE)
+  !StateCheck(LastSeenBy(Myself),STATE_IMPROVEDINVISIBILITY)
+  !GlobalTimerNotExpired("AI_SpellCastThisRound","LOCALS")
+  OR(2)
+    !GlobalTimerNotExpired("AI_Healing","GLOBAL")
+    HPPercentLT(LastSeenBy(Myself),40)
+THEN
+  RESPONSE #100
+    SetInterrupt(FALSE)
+    SetGlobalTimer("AI_Healing","GLOBAL",6)
+    SetGlobalTimer("AI_SpellCastThisRound","LOCALS",6)
+    DisplayStringHead(Myself,9050002) // "*healing*"
+    Spell(LastSeenBy(Myself),CLERIC_CURE_LIGHT_WOUNDS) // Cure Light Wounds
+    SetInterrupt(TRUE)
+END
+
+IF
+  See(MostDamagedOf([PC]))
+  HPPercentLT(LastSeenBy(Myself),70)
+  HaveSpell(INNATE_CURE_LIGHT_WOUNDS) // Cure Light Wounds
+  CheckStatLT(Myself,25,SPELLFAILUREMAGE)
+  OR(3)
+    ActionListEmpty()
+    HPPercentLT(LastSeenBy(Myself),40)
+    CheckStatLT(LastSeenBy(Myself),70,MAXHITPOINTS)
+  !StateCheck(LastSeenBy(Myself),STATE_INVISIBLE)
+  !StateCheck(LastSeenBy(Myself),STATE_IMPROVEDINVISIBILITY)
+  !GlobalTimerNotExpired("AI_SpellCastThisRound","LOCALS")
+  OR(2)
+    !GlobalTimerNotExpired("AI_Healing","GLOBAL")
+    HPPercentLT(LastSeenBy(Myself),40)
+THEN
+  RESPONSE #100
+    SetInterrupt(FALSE)
+    SetGlobalTimer("AI_Healing","GLOBAL",6)
+    SetGlobalTimer("AI_SpellCastThisRound","LOCALS",6)
+    DisplayStringHead(Myself,9050002) // "*healing*"
+    Spell(LastSeenBy(Myself),INNATE_CURE_LIGHT_WOUNDS) // Cure Light Wounds
+    SetInterrupt(TRUE)
+END

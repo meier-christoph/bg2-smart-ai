@@ -1,0 +1,53 @@
+
+// ===========================================================================================
+//    Activate/Deactive the script :
+//      - [D] toggles the script for individual party members
+//      - [N] toggles the script for offensive spell casting
+//
+// ===========================================================================================
+
+IF
+  HotKey(D)
+  Global("AI_ToggleAIOff","LOCALS",0)
+THEN
+  RESPONSE #100
+    DisplayStringHead(Myself,9040002) // "Off"
+    SetGlobal("AI_ToggleAIOff","LOCALS",1)
+END
+
+IF
+  HotKey(D)
+  Global("AI_ToggleAIOff","LOCALS",1)
+THEN
+  RESPONSE #100
+    DisplayStringHead(Myself,9040001) // "On"
+    SetGlobal("AI_ToggleAIOff","LOCALS",0)
+END
+
+IF
+  ActionListEmpty()
+  Global("AI_ToggleAIOff","LOCALS",1)
+THEN
+  RESPONSE #100
+    NoAction()
+END
+
+// ===========================================================================================
+
+IF
+  HotKey(N)
+  Global("AI_ToggleSpellcastingOff","LOCALS",0)
+THEN
+  RESPONSE #100
+    DisplayStringHead(Myself,9040002) // "Off"
+    SetGlobal("AI_ToggleSpellcastingOff","LOCALS",1)
+END
+
+IF
+  HotKey(N)
+  Global("AI_ToggleSpellcastingOff","LOCALS",1)
+THEN
+  RESPONSE #100
+    DisplayStringHead(Myself,9040001) // "On"
+    SetGlobal("AI_ToggleSpellcastingOff","LOCALS",0)
+END

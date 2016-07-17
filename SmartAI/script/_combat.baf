@@ -1,0 +1,59 @@
+
+// ===========================================================================================
+//    Combat :
+//      - Attack on sight (but not when invisible).
+//      - Attack caster first.
+//
+// ===========================================================================================
+
+IF
+  ActionListEmpty()
+  CombatCounter(0)
+  !Detect([EVILCUTOFF])
+  !See(NearestEnemyOf(Myself))
+  StateCheck(Myself,STATE_INVISIBLE)
+  !HotKey(B)
+  !HotKey(F)
+THEN
+  RESPONSE #100
+    NoAction()
+END
+
+IF
+  CombatCounter(0)
+  See(NearestEnemyOf(Myself))
+  !StateCheck(Myself,STATE_INVISIBLE)
+  !StateCheck(Myself,STATE_IMPROVEDINVISIBILITY)
+THEN
+  RESPONSE #100
+    StartCombatCounter()
+    Continue()
+END
+
+IF
+  OR(4)
+    See(NearestEnemyOfType([0.0.0.MAGE_ALL]))
+    See(NearestEnemyOfType([0.0.0.CLERIC_ALL]))
+    See(NearestEnemyOfType([0.0.0.DRUID_ALL]))
+    See(NearestEnemyOfType([0.0.0.BARD_ALL]))
+  OR(2)
+    ActionListEmpty()
+    ModalState(DETECTTRAPS)
+  !StateCheck(Myself,STATE_INVISIBLE)
+  !StateCheck(Myself,STATE_IMPROVEDINVISIBILITY)
+THEN
+  RESPONSE #100
+    AttackReevaluate(LastSeenBy(Myself),30)
+END
+
+IF
+  See(NearestEnemyOf(Myself))
+  OR(2)
+    ActionListEmpty()
+    ModalState(DETECTTRAPS)
+  !StateCheck(Myself,STATE_INVISIBLE)
+  !StateCheck(Myself,STATE_IMPROVEDINVISIBILITY)
+THEN
+  RESPONSE #100
+    AttackReevaluate(NearestEnemyOf(Myself),30)
+END

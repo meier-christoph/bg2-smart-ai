@@ -1,0 +1,95 @@
+
+// ===========================================================================================
+//    Upkeep the following spells :
+//      - Stoneskin
+//      - Iron Skins
+//      - Melf's Minute Meteors
+//      - Rary's Mnemonic Enhancer
+//      - Mind Blank
+//      - Heroe's Feast
+//
+// ===========================================================================================
+
+IF
+  ActionListEmpty()
+  HaveSpell(WIZARD_STONE_SKIN) // Stoneskin
+  CheckStatLT(Myself,25,SPELLFAILUREMAGE)
+  CheckStatLT(Myself,1,STONESKINS)
+  !GlobalTimerNotExpired("AI_SpellCastThisRound","LOCALS")
+THEN
+  RESPONSE #100
+    SetInterrupt(FALSE)
+    SetGlobalTimer("AI_SpellCastThisRound","LOCALS",6)
+    Spell(Myself,WIZARD_STONE_SKIN) // Stoneskin
+    SetInterrupt(TRUE)
+END
+
+IF
+  ActionListEmpty()
+  HaveSpell(CLERIC_IRONSKIN) // Iron Skins
+  CheckStatLT(Myself,25,SPELLFAILUREPRIEST)
+  CheckStatLT(Myself,1,STONESKINS)
+  CheckStatLT(Myself,1,CLERIC_PHYSICAL_MIRROR)
+  !GlobalTimerNotExpired("AI_SpellCastThisRound","LOCALS")
+THEN
+  RESPONSE #100
+    SetInterrupt(FALSE)
+    SetGlobalTimer("AI_SpellCastThisRound","LOCALS",6)
+    Spell(Myself,CLERIC_IRONSKIN) // Iron Skins
+    SetInterrupt(TRUE)
+END
+
+IF
+  ActionListEmpty()
+  !HasItem("ENEBLADE",Myself)
+  !HasItem("MELFMET",Myself)
+  HaveSpell(WIZARD_MELF_METEOR) // Melf's Minute Meteors
+  !HaveSpell(WIZARD_ENERGY_BLADES)
+  CheckStatLT(Myself,25,SPELLFAILUREMAGE)
+  !GlobalTimerNotExpired("AI_SpellCastThisRound","LOCALS")
+THEN
+  RESPONSE #100
+    SetInterrupt(FALSE)
+    SetGlobalTimer("AI_SpellCastThisRound","LOCALS",6)
+    Spell(Myself,WIZARD_MELF_METEOR) // Melf's Minute Meteors
+    SetInterrupt(TRUE)
+END
+
+IF
+  ActionListEmpty()
+  HaveSpellRES("SPWI975") // Rary's Mnemonic Enhancer
+  CheckStatLT(Myself,25,SPELLFAILUREMAGE)
+  !GlobalTimerNotExpired("AI_SpellCastThisRound","LOCALS")
+THEN
+  RESPONSE #100
+    SetInterrupt(FALSE)
+    SetGlobalTimer("AI_SpellCastThisRound","LOCALS",6)
+    SpellRES("SPWI975",Myself) // Rary's Mnemonic Enhancer
+    SetInterrupt(TRUE)
+END
+
+IF
+  ActionListEmpty()
+  HaveSpellRES("SPWI824") // Mind Blank
+  CheckStatLT(Myself,25,SPELLFAILUREMAGE)
+  !GlobalTimerNotExpired("AI_SpellCastThisRound","LOCALS")
+THEN
+  RESPONSE #100
+    SetInterrupt(FALSE)
+    SetGlobalTimer("AI_SpellCastThisRound","LOCALS",6)
+    SpellRES("SPWI824",Myself) // Mind Blank
+    SetInterrupt(TRUE)
+END
+
+IF
+  ActionListEmpty()
+  HaveSpellRES("SPPR526") // Heroe's Feast
+  CheckStatLT(Myself,25,SPELLFAILUREPRIEST)
+  !GlobalTimerNotExpired("AI_SpellCastThisRound","LOCALS")
+THEN
+  RESPONSE #100
+    SetInterrupt(FALSE)
+    SetGlobalTimer("AI_SpellCastThisRound","LOCALS",6)
+    SpellRES("SPPR526",Myself) // Heroe's Feast
+    SetInterrupt(TRUE)
+END

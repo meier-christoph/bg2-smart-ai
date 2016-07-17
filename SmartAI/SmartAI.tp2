@@ -1,0 +1,41 @@
+BACKUP ~SmartAI/backup~
+AUTHOR ~https://github.com/meier-christoph~
+
+// ===========================================================================================
+
+BEGIN ~SmartAI : smart AI script~
+
+COPY ~SmartAI/AI!BUFF.spl~ ~override~
+SAY NAME1 ~SmartAI - Buff Booster~
+
+COMPILE EVALUATE_BUFFER ~SmartAI/script/SmartAI.baf~
+EXTEND_BOTTOM ~SmartAI.bcs~ ~SmartAI/script/_upkeep.baf~
+EXTEND_BOTTOM ~SmartAI.bcs~ ~SmartAI/script/_potion.baf~
+EXTEND_BOTTOM ~SmartAI.bcs~ ~SmartAI/script/_reset.baf~
+EXTEND_BOTTOM ~SmartAI.bcs~ ~SmartAI/script/_toggle.baf~
+EXTEND_BOTTOM ~SmartAI.bcs~ ~SmartAI/script/_heal.baf~
+EXTEND_BOTTOM ~SmartAI.bcs~ ~SmartAI/script/_dispell.baf~
+EXTEND_BOTTOM ~SmartAI.bcs~ ~SmartAI/script/_skills.baf~
+EXTEND_BOTTOM ~SmartAI.bcs~ ~SmartAI/script/_combat.baf~
+EXTEND_BOTTOM ~SmartAI.bcs~ ~SmartAI/script/_buff.baf~
+
+COPY_EXISTING ~override/SmartAI.bcs~ ~scripts/SmartAI.bs~
+  REPLACE ~9020001~ ~*gloup*~
+  REPLACE ~9030001~ ~done~
+  REPLACE ~9040001~ ~On~
+  REPLACE ~9040002~ ~Off~
+  REPLACE ~9050001~ ~*curing*~
+  REPLACE ~9050002~ ~*healing*~
+  REPLACE ~9060001~ ~*Turn Undead*~
+  REPLACE ~9070001~ ~*dispell*~
+  REPLACE ~9080001~ ~*buff*~
+
+APPEND ~scrpdesc.2da~ ~SmartAI 9999901 9999910~
+COPY_EXISTING ~scrpdesc.2da~ ~override/scrpdesc.2da~
+  REPLACE ~9999901~ ~SmartAI~
+  REPLACE ~9999910~ ~Speed up the buffing phase before fights by using a spell boster.
+HOTKEYS :
+  V - Reset all variables.
+  D - Toggles AI for the selected characters.
+  B - Buff (cast long duration protections).
+  F - Fast Buff (cast short duration protections).~

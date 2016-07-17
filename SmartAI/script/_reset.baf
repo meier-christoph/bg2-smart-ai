@@ -1,0 +1,21 @@
+
+// ===========================================================================================
+//    Reset the script :
+//      - resets all global variables
+//
+// ===========================================================================================
+
+IF
+  HotKey(V)
+THEN
+  RESPONSE #100
+    DisplayStringHead(Myself,9030001) // "done"
+    SetGlobal("AI_ToggleAIOff","LOCALS",0)
+    SetGlobal("AI_ToggleSpellcastingOff","LOCALS",0)
+END
+
+//IF
+//  PartyRested()
+//THEN
+//  RESPONSE #100
+//END

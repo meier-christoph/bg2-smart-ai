@@ -1,0 +1,724 @@
+
+// ===========================================================================================
+//    Buff the party :
+//      - must be out of combat.
+//      - [B] cast long duration protections.
+//      - [F] cast short duration protections.
+//
+// ===========================================================================================
+
+IF
+  OR(2)
+    HotKey(B)
+    HotKey(F)
+THEN
+  RESPONSE #100
+    DisplayStringHead(Myself,9080001) // "*buff*"
+    ForceSpellRES("AI!BUFF",Myself)
+    Continue()
+END
+
+// ===========================================================================================
+
+IF
+  HotKey(B)
+  HaveSpell(WIZARD_STRENGTH)
+  CheckStatLT(Myself,100,STREXTRA)
+  CheckStatLT(Myself,19,STR)
+THEN
+  RESPONSE #100
+    Spell(Myself,WIZARD_STRENGTH)
+    Continue()
+END
+
+IF
+  HotKey(B)
+  HaveSpell(WIZARD_SHIELD)
+  CheckStatGT(Myself,0,ARMORCLASS)
+THEN
+  RESPONSE #100
+    Spell(Myself,WIZARD_SHIELD)
+    Continue()
+END
+
+IF
+  HotKey(B)
+  HaveSpell(WIZARD_PROTECTION_FROM_FIRE)
+THEN
+  RESPONSE #100
+    Spell(Player1,WIZARD_PROTECTION_FROM_FIRE)
+    Spell(Player2,WIZARD_PROTECTION_FROM_FIRE)
+    Spell(Player3,WIZARD_PROTECTION_FROM_FIRE)
+    Spell(Player4,WIZARD_PROTECTION_FROM_FIRE)
+    Spell(Player5,WIZARD_PROTECTION_FROM_FIRE)
+    Spell(Player6,WIZARD_PROTECTION_FROM_FIRE)
+    Continue()
+END
+
+IF
+  HotKey(B)
+  HaveSpell(WIZARD_PROTECTION_FROM_ELECTRICITY)
+THEN
+  RESPONSE #100
+    Spell(Player1,WIZARD_PROTECTION_FROM_ELECTRICITY)
+    Spell(Player2,WIZARD_PROTECTION_FROM_ELECTRICITY)
+    Spell(Player3,WIZARD_PROTECTION_FROM_ELECTRICITY)
+    Spell(Player4,WIZARD_PROTECTION_FROM_ELECTRICITY)
+    Spell(Player5,WIZARD_PROTECTION_FROM_ELECTRICITY)
+    Spell(Player6,WIZARD_PROTECTION_FROM_ELECTRICITY)
+    Continue()
+END
+
+IF
+  HotKey(B)
+  HaveSpell(WIZARD_PROTECTION_FROM_ACID)
+THEN
+  RESPONSE #100
+    Spell(Player1,WIZARD_PROTECTION_FROM_ACID)
+    Spell(Player2,WIZARD_PROTECTION_FROM_ACID)
+    Spell(Player3,WIZARD_PROTECTION_FROM_ACID)
+    Spell(Player4,WIZARD_PROTECTION_FROM_ACID)
+    Spell(Player5,WIZARD_PROTECTION_FROM_ACID)
+    Spell(Player6,WIZARD_PROTECTION_FROM_ACID)
+    Continue()
+END
+
+IF
+  HotKey(B)
+  HaveSpell(WIZARD_PROTECTION_FROM_COLD)
+THEN
+  RESPONSE #100
+    Spell(Player1,WIZARD_PROTECTION_FROM_COLD)
+    Spell(Player2,WIZARD_PROTECTION_FROM_COLD)
+    Spell(Player3,WIZARD_PROTECTION_FROM_COLD)
+    Spell(Player4,WIZARD_PROTECTION_FROM_COLD)
+    Spell(Player5,WIZARD_PROTECTION_FROM_COLD)
+    Spell(Player6,WIZARD_PROTECTION_FROM_COLD)
+    Continue()
+END
+
+IF
+  HotKey(B)
+  HaveSpell(WIZARD_SPIRIT_ARMOR)
+  CheckStatGT(Myself,1,ARMORCLASS)
+THEN
+  RESPONSE #100
+    Spell(Myself,WIZARD_SPIRIT_ARMOR)
+    Continue()
+END
+
+IF
+  HotKey(B)
+  HaveSpell(CLERIC_REMOVE_FEAR)
+  CheckStatLT(Myself,1,WIZARD_RESIST_FEAR)
+THEN
+  RESPONSE #100
+    Spell(Myself,CLERIC_REMOVE_FEAR)
+    Continue()
+END
+
+IF
+  HotKey(B)
+  HaveSpell(WIZARD_RESIST_FEAR)
+  CheckStatLT(Myself,1,WIZARD_RESIST_FEAR)
+THEN
+  RESPONSE #100
+    Spell(Myself,WIZARD_RESIST_FEAR)
+    Continue()
+END
+
+IF
+  HotKey(B)
+  HaveSpell(CLERIC_CHAOTIC_COMMANDS)
+THEN
+  RESPONSE #100
+    Spell(Player1,CLERIC_CHAOTIC_COMMANDS)
+    Spell(Player2,CLERIC_CHAOTIC_COMMANDS)
+    Spell(Player3,CLERIC_CHAOTIC_COMMANDS)
+    Spell(Player4,CLERIC_CHAOTIC_COMMANDS)
+    Spell(Player5,CLERIC_CHAOTIC_COMMANDS)
+    Spell(Player6,CLERIC_CHAOTIC_COMMANDS)
+    Continue()
+END
+
+IF
+  HotKey(B)
+  HaveSpell(CLERIC_DEATH_WARD)
+THEN
+  RESPONSE #100
+    Spell(Player1,CLERIC_DEATH_WARD)
+    Spell(Player2,CLERIC_DEATH_WARD)
+    Spell(Player3,CLERIC_DEATH_WARD)
+    Spell(Player4,CLERIC_DEATH_WARD)
+    Spell(Player5,CLERIC_DEATH_WARD)
+    Spell(Player6,CLERIC_DEATH_WARD)
+    Continue()
+END
+
+IF
+  HotKey(B)
+  HaveSpell(CLERIC_PROTECTION_FROM_EVIL_10_FOOT)
+  CheckStatLT(Myself,1,PROTECTION_FROM_EVIL)
+THEN
+  RESPONSE #100
+    Spell(Myself,CLERIC_PROTECTION_FROM_EVIL_10_FOOT)
+    Continue()
+END
+
+IF
+  HotKey(F)
+  HaveSpell(WIZARD_PROTECTION_FROM_EVIL)
+  CheckStatLT(Myself,1,PROTECTION_FROM_EVIL)
+THEN
+  RESPONSE #100
+    Spell(Myself,WIZARD_PROTECTION_FROM_EVIL)
+    Continue()
+END
+
+IF
+  HotKey(B)
+  HaveSpell(WIZARD_PROTECTION_FROM_MAGIC_ENERGY)
+  CheckStatLT(Myself,1,WIZARD_PROTECTION_FROM_MAGIC_ENERGY)
+THEN
+  RESPONSE #100
+    Spell(Myself,WIZARD_PROTECTION_FROM_MAGIC_ENERGY)
+    Continue()
+END
+
+IF
+  HotKey(B)
+  HaveSpell(WIZARD_GHOST_ARMOR)
+  CheckStatGT(Myself,2,ARMORCLASS)
+THEN
+  RESPONSE #100
+    Spell(Myself,WIZARD_GHOST_ARMOR)
+    Continue()
+END
+
+IF
+  HotKey(B)
+  HaveSpellRES("SPWI974") // Arcane Runes
+THEN
+  RESPONSE #100
+    SpellRES("SPWI974",Myself) // Arcane Runes
+    Continue()
+END
+
+// ===========================================================================================
+
+IF
+  HotKey(F)
+  HaveSpell(CLERIC_ARMOR_OF_FAITH)
+  CheckStatLT(Myself,1,CLERIC_ARMOR_OF_FAITH)
+THEN
+  RESPONSE #100
+    Spell(Myself,CLERIC_ARMOR_OF_FAITH)
+    Continue()
+END
+
+IF
+  HotKey(F)
+  HaveSpell(WIZARD_SPELL_TRAP)
+  CheckStatLT(Myself,1,WIZARD_SPELL_TRAP)
+  !HasBounceEffects(Myself)
+THEN
+  RESPONSE #100
+    Spell(Myself,WIZARD_SPELL_TRAP)
+    Continue()
+END
+
+IF
+  HotKey(F)
+  HaveSpell(WIZARD_SPELL_DEFLECTION)
+  CheckStatLT(Myself,1,WIZARD_SPELL_DEFLECTION)
+  !HasBounceEffects(Myself)
+THEN
+  RESPONSE #100
+    Spell(Myself,WIZARD_SPELL_DEFLECTION)
+    Continue()
+END
+
+IF
+  HotKey(F)
+  HaveSpell(WIZARD_MINOR_SPELL_DEFLECTION)
+  CheckStatLT(Myself,1,WIZARD_SPELL_DEFLECTION)
+  !HasBounceEffects(Myself)
+THEN
+  RESPONSE #100
+    Spell(Myself,WIZARD_MINOR_SPELL_DEFLECTION)
+    Continue()
+END
+
+IF
+  HotKey(F)
+  HaveSpell(WIZARD_SPELL_TURNING)
+  CheckStatLT(Myself,1,WIZARD_SPELL_TURNING)
+  !HasBounceEffects(Myself)
+THEN
+  RESPONSE #100
+    Spell(Myself,WIZARD_SPELL_TURNING)
+    Continue()
+END
+
+IF
+  HotKey(F)
+  HaveSpell(WIZARD_MINOR_SPELL_TURNING)
+  CheckStatLT(Myself,1,WIZARD_SPELL_TURNING)
+  !HasBounceEffects(Myself)
+THEN
+  RESPONSE #100
+    Spell(Myself,WIZARD_MINOR_SPELL_TURNING)
+    Continue()
+END
+
+IF
+  HotKey(F)
+  HaveSpell(WIZARD_BLUR)
+THEN
+  RESPONSE #100
+    Spell(Myself,WIZARD_BLUR)
+    Continue()
+END
+
+IF
+  HotKey(F)
+  HaveSpell(WIZARD_MIRROR_IMAGE)
+  !StateCheck(Myself,STATE_MIRRORIMAGE)
+THEN
+  RESPONSE #100
+    Spell(Myself,WIZARD_MIRROR_IMAGE)
+    Continue()
+END
+
+IF
+  HotKey(F)
+  HaveSpell(WIZARD_REFLECTED_IMAGE)
+THEN
+  RESPONSE #100
+    Spell(Myself,WIZARD_REFLECTED_IMAGE)
+    Continue()
+END
+
+IF
+  HotKey(F)
+  HaveSpell(CLERIC_PROTECTION_FROM_LIGHTNING)
+THEN
+  RESPONSE #100
+    Spell(Player1,CLERIC_PROTECTION_FROM_LIGHTNING)
+    Spell(Player2,CLERIC_PROTECTION_FROM_LIGHTNING)
+    Spell(Player3,CLERIC_PROTECTION_FROM_LIGHTNING)
+    Spell(Player4,CLERIC_PROTECTION_FROM_LIGHTNING)
+    Spell(Player5,CLERIC_PROTECTION_FROM_LIGHTNING)
+    Spell(Player6,CLERIC_PROTECTION_FROM_LIGHTNING)
+    Continue()
+END
+
+IF
+  HotKey(F)
+  HaveSpell(CLERIC_BARKSKIN)
+THEN
+  RESPONSE #100
+    Spell(Myself,CLERIC_BARKSKIN)
+    Continue()
+END
+
+IF
+  HotKey(F)
+  HaveSpell(CLERIC_RESIST_FIRE)
+THEN
+  RESPONSE #100
+    Spell(Player1,CLERIC_RESIST_FIRE)
+    Spell(Player2,CLERIC_RESIST_FIRE)
+    Spell(Player3,CLERIC_RESIST_FIRE)
+    Spell(Player4,CLERIC_RESIST_FIRE)
+    Spell(Player5,CLERIC_RESIST_FIRE)
+    Spell(Player6,CLERIC_RESIST_FIRE)
+    Continue()
+END
+
+IF
+  HotKey(F)
+  HaveSpell(CLERIC_PROTECTION_FROM_FIRE)
+THEN
+  RESPONSE #100
+    Spell(Player1,CLERIC_PROTECTION_FROM_FIRE)
+    Spell(Player2,CLERIC_PROTECTION_FROM_FIRE)
+    Spell(Player3,CLERIC_PROTECTION_FROM_FIRE)
+    Spell(Player4,CLERIC_PROTECTION_FROM_FIRE)
+    Spell(Player5,CLERIC_PROTECTION_FROM_FIRE)
+    Spell(Player6,CLERIC_PROTECTION_FROM_FIRE)
+    Continue()
+END
+
+IF
+  HotKey(F)
+  HaveSpell(CLERIC_SHIELD_OF_THE_ARCHONS)
+  CheckStatLT(Myself,1,CLERIC_SHIELD_OF_THE_ARCHONS)
+THEN
+  RESPONSE #100
+    Spell(Myself,CLERIC_SHIELD_OF_THE_ARCHONS)
+    Continue()
+END
+
+IF
+  HotKey(F)
+  HaveSpell(WIZARD_FIRE_SHIELD_RED)
+  CheckStatLT(Myself,1,WIZARD_FIRE_SHIELD)
+THEN
+  RESPONSE #100
+    Spell(Myself,WIZARD_FIRE_SHIELD_RED)
+    Continue()
+END
+
+IF
+  HotKey(F)
+  HaveSpell(WIZARD_FIRE_SHIELD_BLUE)
+  CheckStatLT(Myself,1,WIZARD_FIRE_SHIELD)
+THEN
+  RESPONSE #100
+    Spell(Myself,WIZARD_FIRE_SHIELD_BLUE)
+    Continue()
+END
+
+IF
+  HotKey(F)
+  HaveSpell(CLERIC_PHYSICAL_MIRROR)
+  CheckStatLT(Myself,1,CLERIC_PHYSICAL_MIRROR)
+THEN
+  RESPONSE #100
+    Spell(Myself,CLERIC_PHYSICAL_MIRROR)
+    Continue()
+END
+
+IF
+  HotKey(F)
+  HaveSpell(CLERIC_DRAW_UPON_HOLY_MIGHT)
+THEN
+  RESPONSE #100
+    Spell(Myself,CLERIC_DRAW_UPON_HOLY_MIGHT)
+    Continue()
+END
+
+IF
+  HotKey(F)
+  HaveSpell(CLERIC_CHANT)
+  !StateCheck(Myself,STATE_CHANT)
+THEN
+  RESPONSE #100
+    Spell(Myself,CLERIC_CHANT)
+    Continue()
+END
+
+IF
+  HotKey(F)
+  HaveSpell(CLERIC_DEFENSIVE_HARMONY)
+  CheckStatLT(Myself,1,CLERIC_DEFENSIVE_HARMONY)
+THEN
+  RESPONSE #100
+    Spell(Myself,CLERIC_DEFENSIVE_HARMONY)
+    Continue()
+END
+
+IF
+  HotKey(F)
+  HaveSpell(CLERIC_BLESS)
+  !StateCheck(Myself,STATE_BLESS)
+THEN
+  RESPONSE #100
+    Spell(Myself,CLERIC_BLESS)
+    Continue()
+END
+
+IF
+  HotKey(F)
+  HaveSpell(CLERIC_NEGATIVE_PLANE_PROTECTION)
+THEN
+  RESPONSE #100
+    Spell(Player1,CLERIC_NEGATIVE_PLANE_PROTECTION)
+    Spell(Player2,CLERIC_NEGATIVE_PLANE_PROTECTION)
+    Spell(Player3,CLERIC_NEGATIVE_PLANE_PROTECTION)
+    Spell(Player4,CLERIC_NEGATIVE_PLANE_PROTECTION)
+    Spell(Player5,CLERIC_NEGATIVE_PLANE_PROTECTION)
+    Spell(Player6,CLERIC_NEGATIVE_PLANE_PROTECTION)
+    Continue()
+END
+
+IF
+  HotKey(F)
+  HaveSpell(WIZARD_MISLEAD)
+  CheckStatLT(Myself,1,WIZARD_MISLEAD)
+  CheckStatLT(Myself,75,SPELLFAILUREMAGE)
+  !StateCheck(Myself,STATE_IMPROVEDINVISIBILITY)
+THEN
+  RESPONSE #100
+    Spell(Myself,WIZARD_MISLEAD)
+    Continue()
+END
+
+IF
+  HotKey(F)
+  HaveSpell(ROGUE_EVASION)
+THEN
+  RESPONSE #100
+    Spell(Myself,ROGUE_EVASION)
+    Continue()
+END
+
+IF
+  HotKey(F)
+  HaveSpellRES("SPWI329") // Adrenaline Rush
+THEN
+  RESPONSE #100
+    SpellRES("SPWI329",Myself) // Adrenaline Rush
+    Continue()
+END
+
+IF
+  HotKey(F)
+  HaveSpellRES("SPWI327") // Aura of Focus
+THEN
+  RESPONSE #100
+    SpellRES("SPWI327",Myself) // Aura of Focus
+    Continue()
+END
+
+IF
+  HotKey(F)
+  HaveSpellRES("SPPR530") // Celestial Protection
+  CheckStatLT(Myself,1,WIZARD_PROTECTION_FROM_NORMAL_WEAPONS)
+THEN
+  RESPONSE #100
+    SpellRES("SPPR530",Myself) // Celestial Protection
+    Continue()
+END
+
+IF
+  HotKey(F)
+  HaveSpellRES("SPPR630") // Entropy Shield
+  CheckStatLT(Myself,1,WIZARD_PROTECTION_FROM_THE_ELEMENTS)
+THEN
+  RESPONSE #100
+    SpellRES("SPPR630",Myself) // Entropy Shield
+    Continue()
+END
+
+IF
+  HotKey(F)
+  HaveSpellRES("SPPR331") // Storm Shell
+  CheckStatLT(Myself,1,WIZARD_PROTECTION_FROM_THE_ELEMENTS)
+THEN
+  RESPONSE #100
+    SpellRES("SPPR331",Myself) // Storm Shell
+    Continue()
+END
+
+IF
+  HotKey(F)
+  HaveSpellRES("SPPR730") // Aura of Flaming Death
+  CheckStatLT(Myself,1,WIZARD_FIRE_SHIELD)
+THEN
+  RESPONSE #100
+    SpellRES("SPPR730",Myself) // Aura of Flaming Death
+    Continue()
+END
+
+IF
+  HotKey(F)
+  HaveSpellRES("SPPR322") // Magic Vestment
+  CheckStatLT(Myself,1,CLERIC_ARMOR_OF_FAITH)
+THEN
+  RESPONSE #100
+    SpellRES("SPPR322",Myself) // Magic Vestment
+    Continue()
+END
+
+IF
+  HotKey(F)
+  HaveSpellRES("SPPR328") // Cloak of Bravery
+THEN
+  RESPONSE #100
+    SpellRES("SPPR328",Myself) // Cloak of Bravery
+    Continue()
+END
+
+IF
+  HotKey(F)
+  HaveSpellRES("SPPR422") // Divine Power
+  CheckStatLT(Myself,18,STR)
+THEN
+  RESPONSE #100
+    SpellRES("SPPR422",Myself) // Divine Power
+    Continue()
+END
+
+IF
+  HotKey(F)
+  HaveSpellRES("SPPR524") // Call Upon Faith
+THEN
+  RESPONSE #100
+    SpellRES("SPPR524",Myself) // Call Upon Faith
+    Continue()
+END
+
+IF
+  HotKey(F)
+  HaveSpellRES("SPPR725") // Globe of Blades
+  CheckStatLT(Myself,1,CLERIC_BLADE_BARRIER)
+  OR(2)
+    Range(Player1,0)
+    !Range(Player1,4)
+  OR(2)
+    Range(Player2,0)
+    !Range(Player2,4)
+  OR(2)
+    Range(Player3,0)
+    !Range(Player3,4)
+  OR(2)
+    Range(Player4,0)
+    !Range(Player4,4)
+  OR(2)
+    Range(Player5,0)
+    !Range(Player5,4)
+  OR(2)
+    Range(Player6,0)
+    !Range(Player6,4)
+THEN
+  RESPONSE #100
+    SpellRES("SPPR725",Myself) // Globe of Blades
+    Continue()
+END
+
+IF
+  HotKey(F)
+  HaveSpell(CLERIC_BLADE_BARRIER)
+  CheckStatLT(Myself,1,CLERIC_BLADE_BARRIER)
+  OR(2)
+    Range(Player1,0)
+    !Range(Player1,4)
+  OR(2)
+    Range(Player2,0)
+    !Range(Player2,4)
+  OR(2)
+    Range(Player3,0)
+    !Range(Player3,4)
+  OR(2)
+    Range(Player4,0)
+    !Range(Player4,4)
+  OR(2)
+    Range(Player5,0)
+    !Range(Player5,4)
+  OR(2)
+    Range(Player6,0)
+    !Range(Player6,4)
+THEN
+  RESPONSE #100
+    Spell(Myself,CLERIC_BLADE_BARRIER)
+    Continue()
+END
+
+IF
+  HotKey(F)
+  HaveSpellRES("SPPR750") // Dragon Flesh
+  CheckStatLT(Myself,1,WIZARD_PROTECTION_FROM_THE_ELEMENTS)
+  !HasBounceEffects(Myself)
+  OR(5)
+    CheckStatLT(Myself,50,RESISTFIRE)
+    CheckStatLT(Myself,50,RESISTMAGICFIRE)
+    CheckStatLT(Myself,50,RESISTCOLD)
+    CheckStatLT(Myself,50,RESISTMAGICCOLD)
+    CheckStatLT(Myself,50,RESISTELECTRICITY)
+THEN
+  RESPONSE #100
+    SpellRES("SPPR750",Myself) // Dragon Flesh
+    Continue()
+END
+
+IF
+  HotKey(F)
+  HaveSpellRES("SPPR519") // Wall of Fire
+  CheckStatLT(Myself,1,WIZARD_FIRE_SHIELD)
+THEN
+  RESPONSE #100
+    SpellRES("SPPR519",Myself) // Wall of Fire
+    Continue()
+END
+
+IF
+  HotKey(F)
+  HaveSpellRES("SPPR527") // Wall of Thorns
+  CheckStatLT(Myself,1,WIZARD_FIRE_SHIELD)
+THEN
+  RESPONSE #100
+    SpellRES("SPPR527",Myself) // Wall of Thorns
+    Continue()
+END
+
+IF
+  HotKey(F)
+  HaveSpell(WIZARD_IMPROVED_HASTE)
+  OR(5)
+    See(Myself)
+    See(StrongestOf(Myself))
+    See(NearestMyGroupOfType([0.0.0.FIGHTER_ALL]))
+    See(NearestMyGroupOfType([0.0.0.RANGER_ALL]))
+    See(NearestMyGroupOfType([0.0.0.PALADIN_ALL]))
+  !StateCheck(LastSeenBy(Myself),STATE_HASTED)
+  !StateCheck(LastSeenBy(Myself),STATE_NOT_VISIBLE)
+THEN
+  RESPONSE #100
+    Spell(LastSeenBy(Myself),WIZARD_IMPROVED_HASTE)
+END
+
+IF
+  HotKey(F)
+  HaveSpell(WIZARD_HASTE)
+  OR(5)
+    See(Myself)
+    See(StrongestOf(Myself))
+    See(NearestMyGroupOfType([0.0.0.FIGHTER_ALL]))
+    See(NearestMyGroupOfType([0.0.0.RANGER_ALL]))
+    See(NearestMyGroupOfType([0.0.0.PALADIN_ALL]))
+  !StateCheck(LastSeenBy(Myself),STATE_HASTED)
+  !StateCheck(LastSeenBy(Myself),STATE_NOT_VISIBLE)
+THEN
+  RESPONSE #100
+    Spell(LastSeenBy(Myself),WIZARD_HASTE)
+END
+
+IF
+  HotKey(F)
+  HaveSpellRES("SPWI127") // Physical Agility
+THEN
+  RESPONSE #100
+    SpellRES("SPWI127",Myself) // Physical Agility
+    Continue()
+END
+
+IF
+  HotKey(F)
+  HaveSpellRES("SPWI227") // Cat's Grace
+THEN
+  RESPONSE #100
+    SpellRES("SPWI227",Myself) // Cat's Grace
+    Continue()
+END
+
+IF
+  HotKey(F)
+  HaveSpellRES("SPWI228") // Endurance
+THEN
+  RESPONSE #100
+    SpellRES("SPWI228",Myself) // Endurance
+    Continue()
+END
+
+// ===========================================================================================
+
+IF
+  HotKey(F)
+  HaveSpellRES("SPPR624") // Nature's Debilitating Charm (deactivate spellcasting)
+THEN
+  RESPONSE #100
+    SpellRES("SPPR624",Myself) // Nature's Debilitating Charm
+    Continue()
+END

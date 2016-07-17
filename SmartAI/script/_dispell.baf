@@ -1,0 +1,368 @@
+
+// ===========================================================================================
+//    Dispell the following spells :
+//      - Invisibility and Illusions are dispelled by casting True Sight
+//      - Remove Magic
+//      - Breach (wand and spell)
+//      - Pierce Shield, Pierce Shield, Ruby Ray of Reversal, Warding Whip, Pierce Magic,
+//        Secret Word, Spell Thrust (but not Spell Strike)
+//
+// ===========================================================================================
+
+IF
+  !StateCheck(Myself,STATE_INVISIBLE)
+  !StateCheck(Myself,STATE_IMPROVEDINVISIBILITY)
+  OR(3)
+    Detect(NearestEnemyOf(Myself))
+    Detect([EVILCUTOFF])
+    Detect([GOODBUTRED])
+  OR(7)
+    StateCheck(LastSeenBy(Myself),STATE_INVISIBLE)
+    StateCheck(LastSeenBy(Myself),STATE_IMPROVEDINVISIBILITY)
+    SpellCast([EVILCUTOFF],WIZARD_INVISIBILITY)
+    SpellCast([EVILCUTOFF],WIZARD_IMPROVED_INVISIBILITY)
+    SpellCast([EVILCUTOFF],WIZARD_MIRROR_IMAGE)
+    SpellCast([EVILCUTOFF],WIZARD_MISLEAD)
+    SpellCast([EVILCUTOFF],WIZARD_PROJECT_IMAGE)
+  HaveSpell(WIZARD_TRUE_SIGHT) // True Sight
+  CheckStatLT(Myself,25,SPELLFAILUREMAGE)
+  !GlobalTimerNotExpired("AI_SpellCastThisRound","LOCALS")
+  !GlobalTimerNotExpired("AI_Dispell","GLOBAL")
+  Global("AI_ToggleSpellcastingOff","LOCALS",0)
+THEN
+  RESPONSE #100
+    SetInterrupt(FALSE)
+    SetGlobalTimer("AI_Dispell","GLOBAL",6)
+    SetGlobalTimer("AI_SpellCastThisRound","LOCALS",6)
+    DisplayStringHead(Myself,9070001) // "*dispell*"
+    Spell(Myself,WIZARD_TRUE_SIGHT) // True Sight
+    SetInterrupt(TRUE)
+END
+
+IF
+  !StateCheck(Myself,STATE_INVISIBLE)
+  !StateCheck(Myself,STATE_IMPROVEDINVISIBILITY)
+  OR(3)
+    Detect(NearestEnemyOf(Myself))
+    Detect([EVILCUTOFF])
+    Detect([GOODBUTRED])
+  OR(7)
+    StateCheck(LastSeenBy(Myself),STATE_INVISIBLE)
+    StateCheck(LastSeenBy(Myself),STATE_IMPROVEDINVISIBILITY)
+    SpellCast([EVILCUTOFF],WIZARD_INVISIBILITY)
+    SpellCast([EVILCUTOFF],WIZARD_IMPROVED_INVISIBILITY)
+    SpellCast([EVILCUTOFF],WIZARD_MIRROR_IMAGE)
+    SpellCast([EVILCUTOFF],WIZARD_MISLEAD)
+    SpellCast([EVILCUTOFF],WIZARD_PROJECT_IMAGE)
+  HaveSpell(CLERIC_TRUE_SIGHT) // True Sight
+  CheckStatLT(Myself,25,SPELLFAILUREPRIEST)
+  !GlobalTimerNotExpired("AI_SpellCastThisRound","LOCALS")
+  !GlobalTimerNotExpired("AI_Dispell","GLOBAL")
+  Global("AI_ToggleSpellcastingOff","LOCALS",0)
+THEN
+  RESPONSE #100
+    SetInterrupt(FALSE)
+    SetGlobalTimer("AI_Dispell","GLOBAL",6)
+    SetGlobalTimer("AI_SpellCastThisRound","LOCALS",6)
+    DisplayStringHead(Myself,9070001) // "*dispell*"
+    Spell(Myself,CLERIC_TRUE_SIGHT) // True Sight
+    SetInterrupt(TRUE)
+END
+
+IF
+  !StateCheck(Myself,STATE_INVISIBLE)
+  !StateCheck(Myself,STATE_IMPROVEDINVISIBILITY)
+  OR(3)
+    Detect(NearestEnemyOf(Myself))
+    Detect([EVILCUTOFF])
+    Detect([GOODBUTRED])
+  OR(2)
+    StateCheck(LastSeenBy(Myself),STATE_INVISIBLE)
+    StateCheck(LastSeenBy(Myself),STATE_IMPROVEDINVISIBILITY)
+  HaveSpell(CLERIC_INVISIBILITY_PURGE) // Invisibility Purge
+  CheckStatLT(Myself,25,SPELLFAILUREPRIEST)
+  !GlobalTimerNotExpired("AI_SpellCastThisRound","LOCALS")
+  !GlobalTimerNotExpired("AI_Dispell","GLOBAL")
+  Global("AI_ToggleSpellcastingOff","LOCALS",0)
+THEN
+  RESPONSE #100
+    SetInterrupt(FALSE)
+    SetGlobalTimer("AI_Dispell","GLOBAL",6)
+    SetGlobalTimer("AI_SpellCastThisRound","LOCALS",6)
+    DisplayStringHead(Myself,9070001) // "*dispell*"
+    Spell(Myself,CLERIC_INVISIBILITY_PURGE) // Invisibility Purge
+    SetInterrupt(TRUE)
+END
+
+// ===========================================================================================
+
+IF
+  !StateCheck(Myself,STATE_INVISIBLE)
+  !StateCheck(Myself,STATE_IMPROVEDINVISIBILITY)
+  OR(4)
+    See(NearestEnemyOfType([0.0.0.MAGE_ALL]))
+    See(NearestEnemyOfType([0.0.0.CLERIC_ALL]))
+    See(NearestEnemyOfType([0.0.0.DRUID_ALL]))
+    See(NearestEnemyOfType([0.0.0.BARD_ALL]))
+  OR(5)
+    HasBounceEffects(LastSeenBy(Myself))
+    CheckStatGT(LastSeenBy(Myself),0,STONESKINS)
+    StateCheck(LastSeenBy(Myself),STATE_MIRRORIMAGE)
+    StateCheck(LastSeenBy(Myself),STATE_BLUR)
+    StateCheck(LastSeenBy(Myself),STATE_HASTED)
+  HaveSpell(2302) // Remove Magic
+  CheckStatLT(Myself,25,SPELLFAILUREMAGE)
+  !GlobalTimerNotExpired("AI_SpellCastThisRound","LOCALS")
+  !GlobalTimerNotExpired("AI_Dispell","GLOBAL")
+  Global("AI_ToggleSpellcastingOff","LOCALS",0)
+THEN
+  RESPONSE #100
+    SetInterrupt(FALSE)
+    SetGlobalTimer("AI_Dispell","GLOBAL",6)
+    SetGlobalTimer("AI_SpellCastThisRound","LOCALS",6)
+    DisplayStringHead(Myself,9070001) // "*dispell*"
+    Spell(LastSeenBy(Myself),2302) // Remove Magic
+    SetInterrupt(TRUE)
+END
+
+IF
+  !StateCheck(Myself,STATE_INVISIBLE)
+  !StateCheck(Myself,STATE_IMPROVEDINVISIBILITY)
+  OR(4)
+    See(NearestEnemyOfType([0.0.0.MAGE_ALL]))
+    See(NearestEnemyOfType([0.0.0.CLERIC_ALL]))
+    See(NearestEnemyOfType([0.0.0.DRUID_ALL]))
+    See(NearestEnemyOfType([0.0.0.BARD_ALL]))
+  OR(3)
+    CheckStatGT(LastSeenBy(Myself),0,STONESKINS)
+    CheckStatGT(LastSeenBy(Myself),0,SHIELDGLOBE)
+    CheckStatGT(LastSeenBy(Myself),0,WIZARD_PROTECTION_FROM_MAGIC_WEAPONS)
+  HaveSpell(WIZARD_BREACH) // Breach
+  CheckStatLT(Myself,25,SPELLFAILUREMAGE)
+  !GlobalTimerNotExpired("AI_SpellCastThisRound","LOCALS")
+  !GlobalTimerNotExpired("AI_Dispell","GLOBAL")
+  Global("AI_ToggleSpellcastingOff","LOCALS",0)
+THEN
+  RESPONSE #100
+    SetInterrupt(FALSE)
+    SetGlobalTimer("AI_Dispell","GLOBAL",6)
+    SetGlobalTimer("AI_SpellCastThisRound","LOCALS",6)
+    DisplayStringHead(Myself,9070001) // "*dispell*"
+    Spell(LastSeenBy(Myself),WIZARD_BREACH) // Breach
+    SetInterrupt(TRUE)
+END
+
+IF
+  !StateCheck(Myself,STATE_INVISIBLE)
+  !StateCheck(Myself,STATE_IMPROVEDINVISIBILITY)
+  OR(4)
+    See(NearestEnemyOfType([0.0.0.MAGE_ALL]))
+    See(NearestEnemyOfType([0.0.0.CLERIC_ALL]))
+    See(NearestEnemyOfType([0.0.0.DRUID_ALL]))
+    See(NearestEnemyOfType([0.0.0.BARD_ALL]))
+  OR(6)
+    CheckStatGT(LastSeenBy(Myself),0,WIZARD_SPELL_SHIELD)
+    CheckStatGT(LastSeenBy(Myself),0,MINORGLOBE)
+    CheckStatGT(LastSeenBy(Myself),0,WIZARD_SPELL_DEFLECTION)
+    CheckStatGT(LastSeenBy(Myself),0,WIZARD_SPELL_TURNING)
+    CheckStatGT(LastSeenBy(Myself),1,WIZARD_SPELL_IMMUNITY)
+    CheckStatGT(LastSeenBy(Myself),0,WIZARD_SPELL_TRAP)
+  HaveSpell(WIZARD_PIERCE_SHIELD) // Pierce Shield
+  CheckStatLT(Myself,25,SPELLFAILUREMAGE)
+  !GlobalTimerNotExpired("AI_SpellCastThisRound","LOCALS")
+  !GlobalTimerNotExpired("AI_Dispell","GLOBAL")
+  !Specifics(LastSeenBy(Myself),993399)
+  Global("AI_ToggleSpellcastingOff","LOCALS",0)
+THEN
+  RESPONSE #100
+    SetInterrupt(FALSE)
+    SetGlobalTimer("AI_Dispell","GLOBAL",6)
+    SetGlobalTimer("AI_SpellCastThisRound","LOCALS",6)
+    ChangeSpecifics(LastSeenBy(Myself),993399)
+    DisplayStringHead(Myself,9070001) // "*dispell*"
+    Spell(LastSeenBy(Myself),WIZARD_PIERCE_SHIELD) // Pierce Shield
+    SetInterrupt(TRUE)
+END
+
+IF
+  !StateCheck(Myself,STATE_INVISIBLE)
+  !StateCheck(Myself,STATE_IMPROVEDINVISIBILITY)
+  OR(4)
+    See(NearestEnemyOfType([0.0.0.MAGE_ALL]))
+    See(NearestEnemyOfType([0.0.0.CLERIC_ALL]))
+    See(NearestEnemyOfType([0.0.0.DRUID_ALL]))
+    See(NearestEnemyOfType([0.0.0.BARD_ALL]))
+  OR(6)
+    CheckStatGT(LastSeenBy(Myself),0,WIZARD_SPELL_SHIELD)
+    CheckStatGT(LastSeenBy(Myself),0,MINORGLOBE)
+    CheckStatGT(LastSeenBy(Myself),0,WIZARD_SPELL_DEFLECTION)
+    CheckStatGT(LastSeenBy(Myself),0,WIZARD_SPELL_TURNING)
+    CheckStatGT(LastSeenBy(Myself),1,WIZARD_SPELL_IMMUNITY)
+    CheckStatGT(LastSeenBy(Myself),0,WIZARD_SPELL_TRAP)
+  HaveSpell(WIZARD_RUBY_RAY_OF_REVERSAL) // Ruby Ray of Reversal
+  CheckStatLT(Myself,25,SPELLFAILUREMAGE)
+  !GlobalTimerNotExpired("AI_SpellCastThisRound","LOCALS")
+  !GlobalTimerNotExpired("AI_Dispell","GLOBAL")
+  !Specifics(LastSeenBy(Myself),993399)
+  Global("AI_ToggleSpellcastingOff","LOCALS",0)
+THEN
+  RESPONSE #100
+    SetInterrupt(FALSE)
+    SetGlobalTimer("AI_Dispell","GLOBAL",6)
+    SetGlobalTimer("AI_SpellCastThisRound","LOCALS",6)
+    ChangeSpecifics(LastSeenBy(Myself),993399)
+    DisplayStringHead(Myself,9070001) // "*dispell*"
+    Spell(LastSeenBy(Myself),WIZARD_RUBY_RAY_OF_REVERSAL) // Ruby Ray of Reversal
+    SetInterrupt(TRUE)
+END
+
+IF
+  !StateCheck(Myself,STATE_INVISIBLE)
+  !StateCheck(Myself,STATE_IMPROVEDINVISIBILITY)
+  OR(4)
+    See(NearestEnemyOfType([0.0.0.MAGE_ALL]))
+    See(NearestEnemyOfType([0.0.0.CLERIC_ALL]))
+    See(NearestEnemyOfType([0.0.0.DRUID_ALL]))
+    See(NearestEnemyOfType([0.0.0.BARD_ALL]))
+  OR(5)
+    CheckStatGT(LastSeenBy(Myself),0,WIZARD_SPELL_SHIELD)
+    CheckStatGT(LastSeenBy(Myself),0,MINORGLOBE)
+    CheckStatGT(LastSeenBy(Myself),0,WIZARD_SPELL_DEFLECTION)
+    CheckStatGT(LastSeenBy(Myself),0,WIZARD_SPELL_TURNING)
+    CheckStatGT(LastSeenBy(Myself),1,WIZARD_SPELL_IMMUNITY)
+  HaveSpell(WIZARD_WARDING_WHIP) // Warding Whip
+  CheckStatLT(Myself,25,SPELLFAILUREMAGE)
+  !GlobalTimerNotExpired("AI_SpellCastThisRound","LOCALS")
+  !GlobalTimerNotExpired("AI_Dispell","GLOBAL")
+  !Specifics(LastSeenBy(Myself),993399)
+  Global("AI_ToggleSpellcastingOff","LOCALS",0)
+THEN
+  RESPONSE #100
+    SetInterrupt(FALSE)
+    SetGlobalTimer("AI_Dispell","GLOBAL",6)
+    SetGlobalTimer("AI_SpellCastThisRound","LOCALS",6)
+    ChangeSpecifics(LastSeenBy(Myself),993399)
+    DisplayStringHead(Myself,9070001) // "*dispell*"
+    Spell(LastSeenBy(Myself),WIZARD_WARDING_WHIP) // Warding Whip
+    SetInterrupt(TRUE)
+END
+
+IF
+  !StateCheck(Myself,STATE_INVISIBLE)
+  !StateCheck(Myself,STATE_IMPROVEDINVISIBILITY)
+  OR(4)
+    See(NearestEnemyOfType([0.0.0.MAGE_ALL]))
+    See(NearestEnemyOfType([0.0.0.CLERIC_ALL]))
+    See(NearestEnemyOfType([0.0.0.DRUID_ALL]))
+    See(NearestEnemyOfType([0.0.0.BARD_ALL]))
+  OR(5)
+    CheckStatGT(LastSeenBy(Myself),0,WIZARD_SPELL_SHIELD)
+    CheckStatGT(LastSeenBy(Myself),0,MINORGLOBE)
+    CheckStatGT(LastSeenBy(Myself),0,WIZARD_SPELL_DEFLECTION)
+    CheckStatGT(LastSeenBy(Myself),0,WIZARD_SPELL_TURNING)
+    CheckStatGT(LastSeenBy(Myself),1,WIZARD_SPELL_IMMUNITY)
+  HaveSpell(WIZARD_PIERCE_MAGIC) // Pierce Magic
+  CheckStatLT(Myself,25,SPELLFAILUREMAGE)
+  !GlobalTimerNotExpired("AI_SpellCastThisRound","LOCALS")
+  !GlobalTimerNotExpired("AI_Dispell","GLOBAL")
+  !Specifics(LastSeenBy(Myself),993399)
+  Global("AI_ToggleSpellcastingOff","LOCALS",0)
+THEN
+  RESPONSE #100
+    SetInterrupt(FALSE)
+    SetGlobalTimer("AI_Dispell","GLOBAL",6)
+    SetGlobalTimer("AI_SpellCastThisRound","LOCALS",6)
+    ChangeSpecifics(LastSeenBy(Myself),993399)
+    DisplayStringHead(Myself,9070001) // "*dispell*"
+    Spell(LastSeenBy(Myself),WIZARD_PIERCE_MAGIC) // Pierce Magic
+    SetInterrupt(TRUE)
+END
+
+IF
+  !StateCheck(Myself,STATE_INVISIBLE)
+  !StateCheck(Myself,STATE_IMPROVEDINVISIBILITY)
+  OR(4)
+    See(NearestEnemyOfType([0.0.0.MAGE_ALL]))
+    See(NearestEnemyOfType([0.0.0.CLERIC_ALL]))
+    See(NearestEnemyOfType([0.0.0.DRUID_ALL]))
+    See(NearestEnemyOfType([0.0.0.BARD_ALL]))
+  OR(5)
+    CheckStatGT(LastSeenBy(Myself),0,WIZARD_SPELL_SHIELD)
+    CheckStatGT(LastSeenBy(Myself),0,MINORGLOBE)
+    CheckStatGT(LastSeenBy(Myself),0,WIZARD_SPELL_DEFLECTION)
+    CheckStatGT(LastSeenBy(Myself),0,WIZARD_SPELL_TURNING)
+    CheckStatGT(LastSeenBy(Myself),1,WIZARD_SPELL_IMMUNITY)
+  HaveSpell(WIZARD_SECRET_WORD) // Secret Word
+  CheckStatLT(Myself,25,SPELLFAILUREMAGE)
+  !GlobalTimerNotExpired("AI_SpellCastThisRound","LOCALS")
+  !GlobalTimerNotExpired("AI_Dispell","GLOBAL")
+  !Specifics(LastSeenBy(Myself),993399)
+  Global("AI_ToggleSpellcastingOff","LOCALS",0)
+THEN
+  RESPONSE #100
+    SetInterrupt(FALSE)
+    SetGlobalTimer("AI_Dispell","GLOBAL",6)
+    SetGlobalTimer("AI_SpellCastThisRound","LOCALS",6)
+    ChangeSpecifics(LastSeenBy(Myself),993399)
+    DisplayStringHead(Myself,9070001) // "*dispell*"
+    Spell(LastSeenBy(Myself),WIZARD_SECRET_WORD) // Secret Word
+    SetInterrupt(TRUE)
+END
+
+IF
+  !StateCheck(Myself,STATE_INVISIBLE)
+  !StateCheck(Myself,STATE_IMPROVEDINVISIBILITY)
+  OR(4)
+    See(NearestEnemyOfType([0.0.0.MAGE_ALL]))
+    See(NearestEnemyOfType([0.0.0.CLERIC_ALL]))
+    See(NearestEnemyOfType([0.0.0.DRUID_ALL]))
+    See(NearestEnemyOfType([0.0.0.BARD_ALL]))
+  OR(5)
+    CheckStatGT(LastSeenBy(Myself),0,WIZARD_SPELL_SHIELD)
+    CheckStatGT(LastSeenBy(Myself),0,MINORGLOBE)
+    CheckStatGT(LastSeenBy(Myself),0,WIZARD_SPELL_DEFLECTION)
+    CheckStatGT(LastSeenBy(Myself),0,WIZARD_SPELL_TURNING)
+    CheckStatGT(LastSeenBy(Myself),1,WIZARD_SPELL_IMMUNITY)
+  HaveSpell(WIZARD_SPELL_THRUST) // Spell Thrust
+  CheckStatLT(Myself,25,SPELLFAILUREMAGE)
+  !GlobalTimerNotExpired("AI_SpellCastThisRound","LOCALS")
+  !GlobalTimerNotExpired("AI_Dispell","GLOBAL")
+  !Specifics(LastSeenBy(Myself),993399)
+  Global("AI_ToggleSpellcastingOff","LOCALS",0)
+THEN
+  RESPONSE #100
+    SetInterrupt(FALSE)
+    SetGlobalTimer("AI_Dispell","GLOBAL",6)
+    SetGlobalTimer("AI_SpellCastThisRound","LOCALS",6)
+    ChangeSpecifics(LastSeenBy(Myself),993399)
+    DisplayStringHead(Myself,9070001) // "*dispell*"
+    Spell(LastSeenBy(Myself),WIZARD_SPELL_THRUST) // Spell Thrust
+    SetInterrupt(TRUE)
+END
+
+IF
+  !StateCheck(Myself,STATE_INVISIBLE)
+  !StateCheck(Myself,STATE_IMPROVEDINVISIBILITY)
+  OR(4)
+    See(NearestEnemyOfType([0.0.0.MAGE_ALL]))
+    See(NearestEnemyOfType([0.0.0.CLERIC_ALL]))
+    See(NearestEnemyOfType([0.0.0.DRUID_ALL]))
+    See(NearestEnemyOfType([0.0.0.BARD_ALL]))
+  OR(2)
+    HasBounceEffects(LastSeenBy(Myself))
+    HasImmunityEffects(LastSeenBy(Myself))
+  HasItemEquiped("WAND18",Myself) // Wand of Spell Striking
+  !GlobalTimerNotExpired("AI_SpellCastThisRound","LOCALS")
+  !GlobalTimerNotExpired("AI_Dispell","GLOBAL")
+  !Specifics(LastSeenBy(Myself),993399)
+  Global("AI_ToggleSpellcastingOff","LOCALS",0)
+THEN
+  RESPONSE #100
+    SetInterrupt(FALSE)
+    SetGlobalTimer("AI_Dispell","GLOBAL",6)
+    SetGlobalTimer("AI_SpellCastThisRound","LOCALS",6)
+    ChangeSpecifics(LastSeenBy(Myself),993399)
+    DisplayStringHead(Myself,9070001) // "*dispell*"
+    UseItem("WAND18",LastSeenBy(Myself)) // Wand of Spell Striking
+    SetInterrupt(TRUE)
+END

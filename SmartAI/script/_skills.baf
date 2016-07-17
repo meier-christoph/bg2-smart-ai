@@ -1,0 +1,48 @@
+
+// ===========================================================================================
+//    Skills :
+//      - Detect Traps (for Thiefs).
+//      - Sing Song (for Bards).
+//      - Turn Undead (for Clerics).
+//
+// ===========================================================================================
+
+IF
+  ActionListEmpty()
+  OR(2)
+    Class(Myself,THIEF_ALL)
+    Class(Myself,MONK)
+  !ModalState(DETECTTRAPS)
+  !ModalState(STEALTH)
+  !StateCheck(Myself,STATE_INVISIBLE)
+  !StateCheck(Myself,STATE_IMPROVEDINVISIBILITY)
+THEN
+  RESPONSE #100
+    FindTraps()
+END
+
+IF
+  ActionListEmpty()
+  Class(Myself,BARD_ALL)
+  !ModalState(BATTLESONG)
+THEN
+  RESPONSE #100
+    BattleSong()
+    Wait(2)
+END
+
+IF
+  ActionListEmpty()
+  OR(2)
+    Class(Myself,CLERIC_ALL)
+    Class(Myself,PALADIN_ALL)
+  Range(NearestEnemyOfType([0.UNDEAD]),10)
+  !ModalState(TURNUNDEAD)
+  !GlobalTimerNotExpired("AI_TurnUndeadTimer","LOCALS")
+THEN
+  RESPONSE #100
+    SetGlobalTimer("AI_TurnUndeadTimer","LOCALS",18)
+    DisplayStringHead(Myself,9060001) // "*Turn Undead*"
+    Turn()
+    Wait(3)
+END
